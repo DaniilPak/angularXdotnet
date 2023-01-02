@@ -1,0 +1,93 @@
+<button class="btn btn-lg btn-outline-primary" (click)="openAddModal(contentadd)">Add new contact</button>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Name</th>
+			<th scope="col">Last Name</th>
+			<th scope="col">Phone</th>
+			<th scope="col">Description</th>
+			<th scope="col">Action 1</th>
+			<th scope="col">Action 2</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let contact of contacts;">
+			<th scope="row">{{ contact.id }}</th>
+			<td>
+				{{ contact.name }}
+			</td>
+			<td>{{ contact.lastName }}</td>
+			<td>{{ contact.phone }}</td>
+			<td>{{ contact.description }}</td>
+			<td><button class="btn btn-lg btn-outline-primary" (click)="open(content, contact.id)">Change</button>
+			</td>
+			<td><button class="btn btn btn-danger mb-2 me-2" (click)="openSm(contentdel, contact.id)">Delete</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Contact update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="dateOfBirth">Enter new data</label>
+					<div class="input-group">
+						<input type="text" placeholder="Enter new name" class="form-control" #inputName />
+						<input type="text" placeholder="Enter new last name" class="form-control" #inputLastName />
+					</div>
+					<div class="input-group">
+						<input type="text" placeholder="Enter new phone" class="form-control" #inputPhone />
+						<input type="text" placeholder="Enter new description" class="form-control" #inputDescription />
+					</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');inputName.value = '';inputLastName.value = ''; inputPhone.value = ''; inputDescription.value = ''">Cancel</button>
+		<button type="button" class="btn btn-outline-dark" (click)="saveUpdatedContact(inputName.value, inputLastName.value, inputPhone.value, inputDescription.value)">Save</button>
+	</div>
+</ng-template>
+
+<ng-template #contentdel let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Delete contact</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure you want to delete contact by #{{ currentContactId }}</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+		<button type="button" class="btn btn-light" (click)="removeContact();modal.close();">Delete</button>
+	</div>
+</ng-template>
+
+<ng-template #contentadd let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Add new contact</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="input-group">
+			<input type="text" placeholder="Enter new name" class="form-control" #inputNameAdd />
+			<input type="text" placeholder="Enter new last name" class="form-control" #inputLastNameAdd />
+		</div>
+		<div class="input-group">
+			<input type="text" placeholder="Enter new phone" class="form-control" #inputPhoneAdd />
+			<input type="text" placeholder="Enter new description" class="form-control" #inputDescriptionAdd />
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+		<button type="button" class="btn btn-light" (click)="addNewContact(inputNameAdd.value, inputLastNameAdd.value, inputPhoneAdd.value, inputDescriptionAdd.value)">Add new contact</button>
+	</div>
+</ng-template>
+
+<hr />
